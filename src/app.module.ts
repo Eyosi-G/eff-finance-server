@@ -6,6 +6,7 @@ import { CommissionerModule } from './commissioner/commissioner.module';
 import { ConfigModule } from '@nestjs/config';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
+import { CommissionModule } from './commission/commission.module';
 @Module({
   imports: [
     PrismaModule,
@@ -16,7 +17,8 @@ import { AuthModule } from './auth/auth.module';
       isGlobal: true,
     }),
     UserModule,
-    AuthModule
+    AuthModule,
+    CommissionModule
   ],
   controllers: [],
   providers: [],

@@ -19,4 +19,12 @@ export class UpdateFinanceDto {
   readonly commissionerComissionPerDay: number;
   readonly commissionerTalentComission: number;
   // readonly commissionerTotalComission: number;
+
+  readonly commissionerTransportComission: number;
+  readonly fourthRefereeTransportComission: number;
+  readonly assistanceRefereeTwoTransportComission: number;
+  readonly assistanceRefereeOneTransportComission: number;
+  readonly mainRefereeTransportComission: number;
+
+  
 }

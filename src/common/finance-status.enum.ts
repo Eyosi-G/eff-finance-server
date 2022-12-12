@@ -1,4 +1,4 @@
-export enum FinanceStatus {
+export enum FinanceStatusEnum {
   OPEN = 'OPEN',
   PENDDING = 'PENDDING',
   REJECTED = 'REJECTED',

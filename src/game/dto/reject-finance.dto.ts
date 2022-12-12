@@ -1,5 +1,5 @@
-import { FinanceStatus } from 'src/common/finance-status.enum';
+import { FinanceStatusEnum } from 'src/common/finance-status.enum';
 
 export class RejectFinanceDto {
-  status: FinanceStatus;
+  status: FinanceStatusEnum;
 }

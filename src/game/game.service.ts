@@ -1,6 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { FinanceDataStatus } from '@prisma/client';
-import { FinanceStatus } from 'src/common/finance-status.enum';
+import { FinanceStatusEnum } from 'src/common/finance-status.enum';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateGameDto } from './dto/create-game.dto';
 import { UpdateFinanceDto } from './dto/update-finance.dto';
@@ -45,7 +45,7 @@ export class GameService {
     });
     if (
       !(
-        game.status == FinanceStatus.OPEN ||
+        game.status == FinanceStatusEnum.OPEN ||
         game.status == FinanceDataStatus.REJECTED
       )
     ) {
@@ -68,24 +68,31 @@ export class GameService {
       data: {
         mainRefereeTotalComission:
           game.mainRefereeComissionPerDay.toNumber() *
-            game.mainRefereeNumberOfDays +
-          game.mainRefereeTalentComission.toNumber(),
+          (game.mainRefereeNumberOfDays +
+            game.mainRefereeTransportComission.toNumber() +
+            game.mainRefereeTalentComission.toNumber()),
+
         assistanceRefereeOneTotalComission:
           game.assistanceRefereeOneNumberOfDays *
-            game.assistanceRefereeOneComissionPerDay.toNumber() +
-          game.assistanceRefereeOneTalentComission.toNumber(),
+          (game.assistanceRefereeOneComissionPerDay.toNumber() +
+            game.assistanceRefereeOneTransportComission.toNumber() +
+            game.assistanceRefereeOneTalentComission.toNumber()),
+
         assistanceRefereeTwoTotalComission:
           game.assistanceRefereeTwoNumberOfDays *
-            game.assistanceRefereeTwoComissionPerDay.toNumber() +
-          game.assistanceRefereeTwoTalentComission.toNumber(),
+          (game.assistanceRefereeTwoComissionPerDay.toNumber() +
+            game.assistanceRefereeTwoTalentComission.toNumber() +
+            game.assistanceRefereeTwoTransportComission.toNumber()),
         fourthRefereeTotalComission:
           game.fourthRefereeNumberOfDays *
-            game.fourthRefereeComissionPerDay.toNumber() +
-          game.fourthRefereeTalentComission.toNumber(),
+          (game.fourthRefereeComissionPerDay.toNumber() +
+            game.fourthRefereeTalentComission.toNumber() +
+            game.fourthRefereeTransportComission.toNumber()),
         commissionerTotalComission:
           game.commissionerNumberOfDays *
-            game.commissionerComissionPerDay.toNumber() +
-          game.commissionerTalentComission.toNumber(),
+          (game.commissionerComissionPerDay.toNumber() +
+            game.commissionerTransportComission.toNumber() +
+            game.commissionerTalentComission.toNumber()),
       },
     });
   }

@@ -51,7 +51,7 @@ model User {
 }
 
 model Referee {
-  id                      Int         @id @default(autoincrement())
+  id                      Int                 @id @default(autoincrement())
   firstName               String
   middleName              String
   lastName                String
@@ -60,10 +60,11 @@ model Referee {
   initial                 String
   type                    RefereeType
   league                  League
-  mainRefereeGame         Game[]      @relation("mainReferee")
-  assistantRefereeOneGame Game[]      @relation("assistantRefereeOne")
-  assistantRefereeTwoGame Game[]      @relation("assistantRefereeTwo")
-  fourthRefereeGame       Game[]      @relation("fourthReferee")
+  mainRefereeGame         Game[]              @relation("mainReferee")
+  assistantRefereeOneGame Game[]              @relation("assistantRefereeOne")
+  assistantRefereeTwoGame Game[]              @relation("assistantRefereeTwo")
+  fourthRefereeGame       Game[]              @relation("fourthReferee")
+  RefereeCommission       RefereeCommission[]
 
   @@map("referees")
 }
@@ -83,42 +84,73 @@ model Commissioner {
 }
 
 model Game {
-  id                                  Int               @id @default(autoincrement())
-  league                              League
-  mainRefereeId                       Int
-  assistanceRefereeOneId              Int
-  assistanceRefereeTwoId              Int
-  fourthRefereeId                     Int
-  commissionerId                      Int
-  match                               String
-  destination                         String
-  rejectionReason                     String?
-  status                              FinanceDataStatus @default(OPEN)
-  mainRefereeNumberOfDays             Int               @default(0)
-  mainRefereeComissionPerDay          Decimal           @default(0)
-  mainRefereeTalentComission          Decimal           @default(0)
-  mainRefereeTotalComission           Decimal           @default(0)
-  assistanceRefereeOneNumberOfDays    Int               @default(0)
-  assistanceRefereeOneComissionPerDay Decimal           @default(0)
-  assistanceRefereeOneTalentComission Decimal           @default(0)
-  assistanceRefereeOneTotalComission  Decimal           @default(0)
-  assistanceRefereeTwoNumberOfDays    Int               @default(0)
-  assistanceRefereeTwoComissionPerDay Decimal           @default(0)
-  assistanceRefereeTwoTalentComission Decimal           @default(0)
-  assistanceRefereeTwoTotalComission  Decimal           @default(0)
-  fourthRefereeNumberOfDays           Int               @default(0)
-  fourthRefereeComissionPerDay        Decimal           @default(0)
-  fourthRefereeTalentComission        Decimal           @default(0)
-  fourthRefereeTotalComission         Decimal           @default(0)
-  commissionerNumberOfDays            Int               @default(0)
-  commissionerComissionPerDay         Decimal           @default(0)
-  commissionerTalentComission         Decimal           @default(0)
-  commissionerTotalComission          Decimal           @default(0)
-  commissioner                        Commissioner      @relation(fields: [commissionerId], references: [id])
-  mainReferee                         Referee           @relation("mainReferee", fields: [mainRefereeId], references: [id])
-  fourthReferee                       Referee           @relation("fourthReferee", fields: [fourthRefereeId], references: [id])
-  assistantRefereeOne                 Referee           @relation("assistantRefereeOne", fields: [assistanceRefereeOneId], references: [id])
-  assistantRefereeTwo                 Referee           @relation("assistantRefereeTwo", fields: [assistanceRefereeTwoId], references: [id])
+  id                                     Int               @id @default(autoincrement())
+  league                                 League
+  mainRefereeId                          Int
+  assistanceRefereeOneId                 Int
+  assistanceRefereeTwoId                 Int
+  fourthRefereeId                        Int
+  commissionerId                         Int
+  match                                  String
+  destination                            String
+  rejectionReason                        String?
+  status                                 FinanceDataStatus @default(OPEN)
+  mainRefereeNumberOfDays                Int               @default(0)
+  mainRefereeComissionPerDay             Decimal           @default(0)
+  mainRefereeTalentComission             Decimal           @default(0)
+  mainRefereeTransportComission          Decimal           @default(0)
+  mainRefereeTotalComission              Decimal           @default(0)
+  assistanceRefereeOneNumberOfDays       Int               @default(0)
+  assistanceRefereeOneComissionPerDay    Decimal           @default(0)
+  assistanceRefereeOneTalentComission    Decimal           @default(0)
+  assistanceRefereeOneTransportComission Decimal           @default(0)
+  assistanceRefereeOneTotalComission     Decimal           @default(0)
+  assistanceRefereeTwoNumberOfDays       Int               @default(0)
+  assistanceRefereeTwoComissionPerDay    Decimal           @default(0)
+  assistanceRefereeTwoTalentComission    Decimal           @default(0)
+  assistanceRefereeTwoTransportComission Decimal           @default(0)
+  assistanceRefereeTwoTotalComission     Decimal           @default(0)
+  fourthRefereeNumberOfDays              Int               @default(0)
+  fourthRefereeComissionPerDay           Decimal           @default(0)
+  fourthRefereeTalentComission           Decimal           @default(0)
+  fourthRefereeTransportComission        Decimal           @default(0)
+  fourthRefereeTotalComission            Decimal           @default(0)
+  commissionerNumberOfDays               Int               @default(0)
+  commissionerComissionPerDay            Decimal           @default(0)
+  commissionerTalentComission            Decimal           @default(0)
+  commissionerTransportComission         Decimal           @default(0)
+  commissionerTotalComission             Decimal           @default(0)
+  commissioner                           Commissioner      @relation(fields: [commissionerId], references: [id])
+  mainReferee                            Referee           @relation("mainReferee", fields: [mainRefereeId], references: [id])
+  fourthReferee                          Referee           @relation("fourthReferee", fields: [fourthRefereeId], references: [id])
+  assistantRefereeOne                    Referee           @relation("assistantRefereeOne", fields: [assistanceRefereeOneId], references: [id])
+  assistantRefereeTwo                    Referee           @relation("assistantRefereeTwo", fields: [assistanceRefereeTwoId], references: [id])
 
   @@map("games")
+}
+
+model Commission {
+  id                 Int                 @id @default(autoincrement())
+  status             FinanceDataStatus   @default(OPEN)
+  league             String
+  approvedDate       DateTime?
+  createdAt          DateTime            @default(now())
+  refereeCommissions RefereeCommission[]
+
+  @@map("commission")
+}
+
+model RefereeCommission {
+  id                  Int        @id @default(autoincrement())
+  numberOfDays        Int        @default(0)
+  commissionPerDay    Decimal    @default(0)
+  talentCommission    Decimal    @default(0)
+  transportCommission Decimal    @default(0)
+  totalCommission     Decimal    @default(0)
+  refereeId           Int
+  commissionId        Int
+  referee             Referee    @relation(fields: [refereeId], references: [id])
+  commision           Commission @relation(fields: [commissionId], references: [id])
+
+  @@map("referees_commissions")
 }
