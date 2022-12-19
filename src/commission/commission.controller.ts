@@ -14,7 +14,7 @@ import { FinanceStatusEnum } from 'src/common/finance-status.enum';
 import { CommissionService } from './commission.service';
 import { AddCommissionDto } from './dto/Add-commission.dto';
 
-@Controller('commissions')
+@Controller('/api/commissions')
 export class CommissionController {
   constructor(private readonly commissionService: CommissionService) {}
 

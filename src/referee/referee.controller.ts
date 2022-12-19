@@ -12,7 +12,7 @@ import { CreateRefereeDto } from './dto/create-referee.dto';
 import { UpdateRefereeDto } from './dto/update-referee.dto';
 import { RefereeService } from './referee.service';
 
-@Controller('referees')
+@Controller('/api/referees')
 export class RefereeController {
   constructor(private readonly refereeService: RefereeService) {}
   @Post()

@@ -5,7 +5,7 @@ import { UpdateFinanceDto } from './dto/update-finance.dto';
 import { UpdateGameDto } from './dto/update-game.dto';
 import { GameService } from './game.service';
 
-@Controller('games')
+@Controller('/api/games')
 export class GameController {
   constructor(private readonly gameService: GameService) {}
   @Post()

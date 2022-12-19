@@ -11,7 +11,7 @@ import { CommissionerService } from './commissioner.service';
 import { CreateCommissonerDto } from './dto/create-commissioner.dto';
 import { UpdateCommissonerDto } from './dto/update-commissioner.dto';
 
-@Controller('/commissioners')
+@Controller('api/commissioners')
 export class CommissionerController {
   constructor(private readonly commissionerService: CommissionerService) {}
 
